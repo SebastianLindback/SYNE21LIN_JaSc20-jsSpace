@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
   <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
     rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
@@ -8,8 +9,8 @@
     <link rel="stylesheet" href="master.css">
     <title></title>
   </head>
-  <body>
 
+  <body>
     <div class="BG">
     </div>
     <div class="container">
@@ -26,36 +27,17 @@
         </div>
       </div>
     </div>
-
-    <div class="VäljDatum">
-      <label for="start">Välj Datum:</label>
-      <input type="date" id="dt" onchange="handler(event);"/>
-    </div>
-
-    <script src="main.js" charset="utf-8"></script>
   </body>
+
+  <div class="VäljDatum">
+    <label for="start">Välj Datum:</label>
+    <input type="date" id="dt" onchange="handler(event);"/>
+  </div>
+
+  <script src="main.js" charset="utf-8"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
   crossorigin="anonymous"></script>
-  
-<script> 
-  function handler(e){
-    var req = new XMLHttpRequest();
-    var url = "https://api.nasa.gov/planetary/apod?";
-    var api_key = "lZwg9tTZMqD86tp9mvKrQIFAjbrC4kpgVtKnCKp5";
-    var datum = e.target.value;
-
-    req.open("GET", url + "start_date=" + datum + "&end_date=" + datum + "&api_key=" + api_key, true);
-    req.send();
-
-    req.addEventListener("load", function(){
-      if(req.status == 200 && req.readyState == 4){
-        var response = JSON.parse(req.responseText);
-        document.getElementById("pic").src = response[0].hdurl;
-        document.getElementById("title").textContent = response[0].title;
-        document.getElementById("date").textContent = response[0].date;
-        document.getElementById("explanation").textContent = response[0].explanation;
-    }})};
-</script>
 
 </html>
