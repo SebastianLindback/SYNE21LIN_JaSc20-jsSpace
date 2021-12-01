@@ -18,4 +18,4 @@ req.addEventListener("load", function(){
     document.getElementById("pic").src = response.hdurl;
     document.getElementById("explanation").textContent = response.explanation;
   }
-})
+});
