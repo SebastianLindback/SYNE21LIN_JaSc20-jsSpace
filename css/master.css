@@ -1,6 +1,5 @@
 .BG {
   background-image: url('../img/home.jpg');
-  ;
   background-size: cover;
   height: 500px;
   width: 100%;
@@ -14,6 +13,13 @@ img {
 }
 
 .col-9 {
+  background-color: white;
+  color: black;
+  margin: 0px;
+  padding: 0px;
+}
+
+.col-12 {
   background-color: white;
   color: black;
   margin: 0px;
