@@ -65,7 +65,7 @@ function todaysDate(){
 	var today = new Date();
 	let todayDate = today.getDate();
 
-	// datumet kommer i fel format 
+	// datumet kommer i fel format, xxxx-xx-x vi behöver xxxx-xx-xx.
 	if (String(todayDate).length == 1) {todayDate = `0${todayDate}`;}
 	console.log(todayDate.length, todayDate);
 	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+todayDate;
