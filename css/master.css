@@ -16,7 +16,12 @@ img{
   padding: 0px;
 }
 .col-3{
-  padding: 0px;
+  background-size: 300px;
+  width: 400px;
+  height: 400px;
+  position: fixed;
+  bottom: 25px;
+  right: 110px;
 }
 body{
   background-color: black;
