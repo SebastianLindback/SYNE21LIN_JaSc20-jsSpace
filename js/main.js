@@ -31,9 +31,11 @@ function handler(e){
 	sendAPIreq(hUrl + "start_date=" + datum + "&end_date=" + datum + "&api_key=" + api_key, 1);
 }
 
-
-
-
+function clearBox(elementID)
+{
+	arrNamn.length = 0; // nollställ 
+    document.getElementById(elementID).innerHTML = ""; // ta bort alla Asteroider
+}
 
 //Nedan defineras funktionerna, men det körs enbart när de anropas, se åvan.
 async function sendAPIreq(fetchUrl, apiMetod) {
@@ -46,7 +48,9 @@ async function sendAPIreq(fetchUrl, apiMetod) {
 	});
 
 }
+
 function apiDataUse(data, apiMetod){
+clearBox("astroider");
   doomsdayAstro = [];
 	let danger = 0;
 	if (apiMetod){
@@ -77,8 +81,7 @@ function apiDataUse(data, apiMetod){
 		 if (astroMax[i].is_potentially_hazardous_asteroid){ danger++;doomsdayAstro.push(astroMax[i]);}
    }
 
-		// skriver ut resultatet av hur många som var farliga.
-
+  // skriver ut resultatet av hur många som var farliga.
     let classDanger= "";
     let link = "";
     for (var i = 0; i < arrNamn.length; i++) {
