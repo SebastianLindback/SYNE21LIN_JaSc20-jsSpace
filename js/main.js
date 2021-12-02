@@ -26,8 +26,9 @@ sendAPIreq(url + api_key,1); // kör APOS API
 // den här körs på onclick
 function handler(e){
 	// när datumet väljs i datumväljaren skickas läggs det till i filtreringen vid api call
-  let datum = e.target.value;
-	sendAPIreq(aposSelectionURL + "start_date=" + datum + "&end_date=" + datum + "&api_key=" + api_key, 1);
+  var hUrl = "https://api.nasa.gov/planetary/apod?";
+  var datum = e.target.value;
+  sendAPIreq(hUrl + "start_date=" + datum + "&end_date=" + datum + "&api_key=" + api_key, 1);
 }
 
 function ClearAsteroids()
