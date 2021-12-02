@@ -9,10 +9,15 @@ let neoEndDate = "";
 let neoWs = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${neoStartDate}&end_date=${neoEndDate}&api_key=`;
 var api_key = "lZwg9tTZMqD86tp9mvKrQIFAjbrC4kpgVtKnCKp5";
 let publicTemp;
+<<<<<<< HEAD
 
 todaysDate();
 sendAPIreq(url + api_key,1);
 
+=======
+let arrNamn = [];
+// Programmet körs imellan dessa funktioner
+>>>>>>> 7f2857af8be7e1f89d8e97b5cada9c04c19dc953
 
 
 function handler(e){
@@ -32,6 +37,7 @@ async function sendAPIreq(fetchUrl, apiMetod) {
 
 }
 function apiDataUse(data, apiMetod){
+
 	let danger = 0;
 	if (apiMetod){
 		//APOS Metod
@@ -42,7 +48,15 @@ function apiDataUse(data, apiMetod){
 	document.getElementById("explanation").textContent = data.explanation;
 	}
 	else{
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+    
+>>>>>>> a226b6cc291a91deea41b0f3463fd9b855c1310d
+>>>>>>> 7f2857af8be7e1f89d8e97b5cada9c04c19dc953
 		// NeoWs Metod
 		console.log(`Mellan ${neoStartDate} och ${neoEndDate} passerade ${data.element_count}st astroider.`);
 		// astroMin + astroMax består av två olika arrayer. en array för startdatumet (neoStartDate) och en för slutdatum (neoEndDate)
@@ -51,7 +65,11 @@ function apiDataUse(data, apiMetod){
 		// skriver ut alla namn i arrayen med startdatumet och kollor ifall det fanns någon astroid med potenciell fara.
 		for (let i = 0; i < astroMin.length; i++){
 			 console.log(astroMin[i].name);
+<<<<<<< HEAD
        document.getElementById("neotext").textContent += astroMin[i].name;
+=======
+			 arrNamn.push(astroMin[i].name);
+>>>>>>> 7f2857af8be7e1f89d8e97b5cada9c04c19dc953
 		  	if (astroMin.is_potentially_hazardous_asteroid){ danger++;}
 			}
 
@@ -59,12 +77,26 @@ function apiDataUse(data, apiMetod){
 		// skriver ut alla namn i arrayen med slutdatumet och kollor ifall det fanns någon astroid med potenciell fara.
 		for (let i = 0; i < astroMax.length; i++){
 			 console.log(astroMax[i].name);
+<<<<<<< HEAD
 document.getElementById("neotext").textContent += astroMax[i].name;
+=======
+<<<<<<< HEAD
+			 arrNamn.push(astroMax[i].name);
+=======
+
+>>>>>>> a226b6cc291a91deea41b0f3463fd9b855c1310d
+>>>>>>> 7f2857af8be7e1f89d8e97b5cada9c04c19dc953
 		 if (astroMax.is_potentially_hazardous_asteroid){ danger++;} }
 		}
 		// skriver ut resultatet av hur många som var farliga.
 		console.log(`${danger} av nämnda astroider var potenciellt farliga`);
+<<<<<<< HEAD
     document.getElementById("closecol").textContent =`${danger} av nämnda astroider var potenciellt farliga`;
+=======
+		console.log(arrNamn);
+
+
+>>>>>>> 7f2857af8be7e1f89d8e97b5cada9c04c19dc953
 	}
 
 function todaysDate(){
