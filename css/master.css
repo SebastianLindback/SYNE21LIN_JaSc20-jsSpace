@@ -35,3 +35,9 @@ label {
   padding: 5px 10px;
   margin-right: 10px;
 }
+.danger a{
+  color: red;
+  font: 18px;
+  text-decoration: underline;
+
+}

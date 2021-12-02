@@ -35,9 +35,14 @@
       <div class="row">
         <div class="col-12">
           <br>
-            <h1>Nasa Near earth</h1>
-              <button id="neoknapp" onclick="sendAPIreq(neoWs + api_key, 0);" >Show near Earth objects</button>
+            <h1>Atroider som passerar de närmsta två dagarna</h1>
+              <button id="neoknapp" onclick="sendAPIreq(neoWs + api_key, 0);" >Ladda in prognos</button>
+              <p>Det krävde endast en astroid för att utpåna dinosaurierna. De rödmarkerade astroiderna är klassifierade som potenciellt farliga av NASA</p>
+              <p id="dangerText"></p>
               <p id="neotext"> </p>
+              <ul id="astroider">
+
+              </ul>
               <p id="closecol"></p>
   </body>
 
