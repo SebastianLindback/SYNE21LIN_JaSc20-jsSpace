@@ -1,45 +1,56 @@
 //https://api.nasa.gov/planetary/apod?api_key=lZwg9tTZMqD86tp9mvKrQIFAjbrC4kpgVtKnCKp5
 //lZwg9tTZMqD86tp9mvKrQIFAjbrC4kpgVtKnCKp5
+//https://wilsjame.github.io/how-to-nasa/
 
-let url = "https://api.nasa.gov/planetary/apod?api_key=";
-let aposSelectionURL = "https://api.nasa.gov/planetary/apod?";
+var req = new XMLHttpRequest();
+var url = "https://api.nasa.gov/planetary/apod?api_key=";
 let neoStartDate = "";
 let neoEndDate = "";
 todaysDate(); // definerar dagens datum i datumväljaren.
 neoWs = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${neoStartDate}&end_date=${neoEndDate}&api_key=`;
 
-let api_key = "lZwg9tTZMqD86tp9mvKrQIFAjbrC4kpgVtKnCKp5";
+var api_key = "lZwg9tTZMqD86tp9mvKrQIFAjbrC4kpgVtKnCKp5";
 let publicTemp;
 let arrNamn = [];
 let doomsdayAstro = [];
+// Programmet körs imellan dessa funktioner
+
+
+
+
 
 sendAPIreq(url + api_key,1); // kör APOS API
 
+
+//----
+// den här körs på onclick
 function handler(e){
 	// när datumet väljs i datumväljaren skickas läggs det till i filtreringen vid api call
-  let datum = e.target.value;
-	sendAPIreq(aposSelectionURL + "start_date=" + datum + "&end_date=" + datum + "&api_key=" + api_key, 1);
+  var hUrl = "https://api.nasa.gov/planetary/apod?";
+  var datum = e.target.value;
+  sendAPIreq(hUrl + "start_date=" + datum + "&end_date=" + datum + "&api_key=" + api_key, 1);
 }
 
-function clearBox(elementID)
+function ClearAsteroids()
 {
-	arrNamn.length = 0; // nollställ
-    document.getElementById(elementID).innerHTML = ""; // ta bort alla Asteroider
+	arrNamn.length = 0; // nollställ 
+	document.getElementById("dangerText").innerHTML = ""; // ta bort dangertexten
+	document.getElementById("astroider").innerHTML = ""; // ta bort alla Asteroider
 }
 
+//Nedan defineras funktionerna, men det körs enbart när de anropas, se åvan.
 async function sendAPIreq(fetchUrl, apiMetod) {
 	// funktionen tar emot data från api länk + api key och sedan skckar den ner datan som en JSON till apiDataUse
 	// apimetod: 1 = APOS, 0 = NeoWs
 	let req = await fetch(fetchUrl);
 	req.json().then(data => {
-  console.log(data, "APImetod: " + apiMetod);
+  console.log(data, "oki" + apiMetod);
 	apiDataUse(data, apiMetod);
 	});
-
 }
 
 function apiDataUse(data, apiMetod){
-clearBox("astroider");
+ClearAsteroids();
   doomsdayAstro = [];
 	let danger = 0;
 	if (apiMetod){
@@ -47,24 +58,12 @@ clearBox("astroider");
 	if (data.date == undefined) {data = data[0]}
 	document.getElementById("title").textContent = data.title;
 	document.getElementById("date").textContent = data.date;
-  // Finns tydligen med youtube videor i APIn. togglar av och på en iframe berorende på media_type
-  if (data.media_type == "image") {
-    document.getElementById("pic").src = data.hdurl;
-    document.getElementById("pic").style.display = "block";
-    document.getElementById("vid").style.display = "none";}
-  else if (data.media_type == "video") {
-    document.getElementById("vid").src = data.url;
-    document.getElementById("pic").style.display = "none";
-    document.getElementById("vid").style.display = "block" }
-
+	document.getElementById("pic").src = data.hdurl;
 	document.getElementById("explanation").textContent = data.explanation;
 	}
 	else{
 		// NeoWs Metod
-    document.getElementById("astroider").innerHTML = "";
-    arrNamn=[];
-    let classDanger= "";
-    let link = "";
+		console.log(`Mellan ${neoStartDate} och ${neoEndDate} passerade ${data.element_count}st astroider.`);
 		// astroMin + astroMax består av två olika arrayer. en array för startdatumet (neoStartDate) och en för slutdatum (neoEndDate)
 		let astroMin = data.near_earth_objects[neoStartDate];
 		// skriver ut alla namn i arrayen med startdatumet och kollor ifall det fanns någon astroid med potenciell fara.
@@ -81,19 +80,20 @@ clearBox("astroider");
 			 arrNamn.push(astroMax[i].name);
 		 if (astroMax[i].is_potentially_hazardous_asteroid){ danger++;doomsdayAstro.push(astroMax[i]);}
    }
-    // filtrera ut resultaten och flaggar potenciella faror
-    for (let i = 0; i < arrNamn.length; i++) {
-      link = `https://www.google.com/search?q=${arrNamn[i]}`;
-      for (let y = 0; y < doomsdayAstro.length; y++) {
-        if (arrNamn[i] == doomsdayAstro[y].name) { classDanger= `class='danger'`; console.log("danger");
-        link = `https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley`;}
+
+  // skriver ut resultatet av hur många som var farliga.
+    let classDanger= "";
+    let link = "";
+    for (var i = 0; i < arrNamn.length; i++) {
+      for (var y = 0; y < doomsdayAstro.length; y++) {
+        if (arrNamn[i] == doomsdayAstro[y].name) { classDanger= `class='danger'`; console.log("danger");}
+        link = `https://www.google.com/search?q=${arrNamn[i]}`;
       }
-      // print to html
+      link = `https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley`;
       document.getElementById("astroider").innerHTML += `<li ${classDanger}><a href='${link}'> ${arrNamn[i]}  <a/></li>`;
       classDanger= "";
       link = "";
     }
-    document.getElementById("dangerText").innerHTML = (`Mellan ${neoStartDate} och ${neoEndDate} förväntas ${data.element_count}st astroider passera. <br> ${danger} av listade astroider är potenciellt farliga`);
 
     document.getElementById("dangerText").innerHTML = (`${danger} av listade astroider är potenciellt farliga`);
 
@@ -104,8 +104,8 @@ clearBox("astroider");
 	}
 
 function todaysDate(){
-  // definerar de närmsta två dagarna och lägger in en gräns för datumväljaren så att inte framtida APOS calls görs och ger error
-  let today = new Date();
+	// funktionen definerar dagens datum som ett max värde för datumväljaren med id=dt. så att programmet inte error uppstår av att framtida datum väljs.
+  var today = new Date();
     neoStartDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+2).toISOString().split('T')[0];
     neoEndDate = new Date(today.getFullYear(), today.getMonth(), (today.getDate()+3)).toISOString().split('T')[0];
     document.getElementById("dt").max = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1).toISOString().split('T')[0];
