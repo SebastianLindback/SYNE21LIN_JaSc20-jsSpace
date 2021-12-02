@@ -36,11 +36,9 @@
         <div class="col-12">
           <br>
             <h1>Nasa Near earth</h1>
-              <button type="button" name="astroknapp">Show near Earth objects</button>
-      <h2 id="title"></h2>
-      <h3>Date: <span id="date"></span></h3>
-      <p id="explanation"></p>
-        </div>
+              <button id="neoknapp" onclick="sendAPIreq(neoWs + api_key, 0);" >Show near Earth objects</button>
+              <p id="neotext"> </p>
+              <p id="closecol"></p>
   </body>
 
 

@@ -4,40 +4,31 @@
 
 var req = new XMLHttpRequest();
 var url = "https://api.nasa.gov/planetary/apod?api_key=";
-let neoStartDate = "2019-10-11";
-let neoEndDate = "2019-10-12";
+let neoStartDate = "";
+let neoEndDate = "";
 let neoWs = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${neoStartDate}&end_date=${neoEndDate}&api_key=`;
 var api_key = "lZwg9tTZMqD86tp9mvKrQIFAjbrC4kpgVtKnCKp5";
 let publicTemp;
 
-// Programmet körs imellan dessa funktioner
+todaysDate();
+sendAPIreq(url + api_key,1);
 
-todaysDate(); // definerar dagens datum i datumväljaren.
-sendAPIreq(url + api_key,1); // kör APOS API
-sendAPIreq(neoWs + api_key, 0); // kör NewWs API
 
-//----
-// den här körs på onclick
+
 function handler(e){
-	// när datumet väljs i datumväljaren skickas läggs det till i filtreringen vid api call
   var hUrl = "https://api.nasa.gov/planetary/apod?";
   var datum = e.target.value;
 	sendAPIreq(hUrl + "start_date=" + datum + "&end_date=" + datum + "&api_key=" + api_key, 1);
 }
 
-
-
-
-
-//Nedan defineras funktionerna, men det körs enbart när de anropas, se åvan.
 async function sendAPIreq(fetchUrl, apiMetod) {
-	// funktionen tar emot data från api länk + api key och sedan skckar den ner datan som en JSON till apiDataUse
 	// apimetod: 1 = APOS, 0 = NeoWs
 	let req = await fetch(fetchUrl);
 	req.json().then(data => {
   console.log(data, "oki" + apiMetod);
 	apiDataUse(data, apiMetod);
 	});
+	console.log(req);
 
 }
 function apiDataUse(data, apiMetod){
@@ -51,14 +42,16 @@ function apiDataUse(data, apiMetod){
 	document.getElementById("explanation").textContent = data.explanation;
 	}
 	else{
-    
+
 		// NeoWs Metod
 		console.log(`Mellan ${neoStartDate} och ${neoEndDate} passerade ${data.element_count}st astroider.`);
 		// astroMin + astroMax består av två olika arrayer. en array för startdatumet (neoStartDate) och en för slutdatum (neoEndDate)
 		let astroMin = data.near_earth_objects[neoStartDate];
+    console.log(neoStartDate);
 		// skriver ut alla namn i arrayen med startdatumet och kollor ifall det fanns någon astroid med potenciell fara.
 		for (let i = 0; i < astroMin.length; i++){
 			 console.log(astroMin[i].name);
+       document.getElementById("neotext").textContent += astroMin[i].name;
 		  	if (astroMin.is_potentially_hazardous_asteroid){ danger++;}
 			}
 
@@ -66,11 +59,12 @@ function apiDataUse(data, apiMetod){
 		// skriver ut alla namn i arrayen med slutdatumet och kollor ifall det fanns någon astroid med potenciell fara.
 		for (let i = 0; i < astroMax.length; i++){
 			 console.log(astroMax[i].name);
-
+document.getElementById("neotext").textContent += astroMax[i].name;
 		 if (astroMax.is_potentially_hazardous_asteroid){ danger++;} }
 		}
 		// skriver ut resultatet av hur många som var farliga.
 		console.log(`${danger} av nämnda astroider var potenciellt farliga`);
+    document.getElementById("closecol").textContent =`${danger} av nämnda astroider var potenciellt farliga`;
 	}
 
 function todaysDate(){
@@ -81,14 +75,15 @@ function todaysDate(){
 	// datumet kommer i fel format, xxxx-xx-x vi behöver xxxx-xx-xx.
 	if (String(todayDate).length == 1) {todayDate = `0${todayDate}`;}
 	console.log(todayDate.length, todayDate);
-	// formaterar och skriver ut i max värdet på elementet
 	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+todayDate;
 	document.getElementById("dt").max = date;
+  if (todayDate > 2) {
+  neoStartDate =today.getFullYear()+'-'+(today.getMonth()+1)+'-'+todayDate - 2;
+  }
+  else{
+    let månad = today.getMonth()+1;
+    neoStartDate =today.getFullYear()+'-'+(månad- 1)+'-'+(todayDate - 2 + 30);
+    console.log(neoStartDate);
+  }
+  neoEndDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(todayDate - 1);
 }
-<<<<<<< HEAD
-
-
-
-sendAPIreq(neoWs + api_key, 0);
-=======
->>>>>>> 3d91f0d451ccd03ab43510decbfb0517107e239e
