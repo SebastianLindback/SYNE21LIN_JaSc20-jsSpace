@@ -96,6 +96,10 @@ clearBox("astroider");
     }
 
     document.getElementById("dangerText").innerHTML = (`${danger} av listade astroider är potenciellt farliga`);
+
+	// scrolla ner automatiskt till astroiderna
+	window.scrollTo(0,document.body.scrollHeight);
+
   }
 	}
 
