@@ -12,6 +12,10 @@
 
   <body>
     <div class="BG">
+      <div class="VäljDatum">
+        <label for="start">Välj Datum:</label>
+        <input type="date" id="dt" min="2000-01-01" max="" onchange="handler(event);"/>
+      </div>
     </div>
     <div class="container">
       <div class="row">
@@ -27,12 +31,20 @@
         </div>
       </div>
     </div>
-  </body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <br>
+            <h1>Asteroider som passerar de närmsta två dagarna</h1>
+              <button id="neoknapp" onclick="sendAPIreq(neoWs + api_key, 0);" >Ladda in prognos</button>
+              <p>Det krävde endast en astroid för att utpåna dinosaurierna. De rödmarkerade astroiderna är klassifierade som potenciellt farliga av NASA</p>
+              <p id="dangerText"></p>
+              <p id="neotext"> </p>
+              <ul id="astroider">
 
-  <div class="VäljDatum">
-    <label for="start">Välj Datum:</label>
-    <input type="date" id="dt" onchange="handler(event);"/>
-  </div>
+              </ul>
+              <p id="closecol"></p>
+  </body>
 
   <script src="js/main.js" charset="utf-8"></script>
 
