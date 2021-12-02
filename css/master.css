@@ -1,6 +1,5 @@
 .BG {
   background-image: url('../img/home.jpg');
-  ;
   background-size: cover;
   height: 500px;
   width: 100%;
@@ -27,6 +26,13 @@ body {
 .VäljDatum {
   text-align: center;
   padding-top: 18%;
+}
+
+.col-12 {
+  background-color: white;
+  color: black;
+  margin: 0px;
+  padding: 0px;
 }
 
 
