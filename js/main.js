@@ -9,7 +9,7 @@ let neoEndDate = "2019-10-12";
 let neoWs = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${neoStartDate}&end_date=${neoEndDate}&api_key=`;
 var api_key = "lZwg9tTZMqD86tp9mvKrQIFAjbrC4kpgVtKnCKp5";
 let publicTemp;
-
+let arrNamn = [];
 // Programmet körs imellan dessa funktioner
 
 todaysDate(); // definerar dagens datum i datumväljaren.
@@ -41,6 +41,7 @@ async function sendAPIreq(fetchUrl, apiMetod) {
 
 }
 function apiDataUse(data, apiMetod){
+
 	let danger = 0;
 	if (apiMetod){
 		//APOS Metod
@@ -51,6 +52,7 @@ function apiDataUse(data, apiMetod){
 	document.getElementById("explanation").textContent = data.explanation;
 	}
 	else{
+
 		// NeoWs Metod
 		console.log(`Mellan ${neoStartDate} och ${neoEndDate} passerade ${data.element_count}st astroider.`);
 		// astroMin + astroMax består av två olika arrayer. en array för startdatumet (neoStartDate) och en för slutdatum (neoEndDate)
@@ -58,6 +60,7 @@ function apiDataUse(data, apiMetod){
 		// skriver ut alla namn i arrayen med startdatumet och kollor ifall det fanns någon astroid med potenciell fara.
 		for (let i = 0; i < astroMin.length; i++){
 			 console.log(astroMin[i].name);
+			 arrNamn.push(astroMin[i].name);
 		  	if (astroMin.is_potentially_hazardous_asteroid){ danger++;}
 			}
 
@@ -65,10 +68,14 @@ function apiDataUse(data, apiMetod){
 		// skriver ut alla namn i arrayen med slutdatumet och kollor ifall det fanns någon astroid med potenciell fara.
 		for (let i = 0; i < astroMax.length; i++){
 			 console.log(astroMax[i].name);
+			 arrNamn.push(astroMax[i].name);
 		 if (astroMax.is_potentially_hazardous_asteroid){ danger++;} }
 		}
 		// skriver ut resultatet av hur många som var farliga.
 		console.log(`${danger} av nämnda astroider var potenciellt farliga`);
+		console.log(arrNamn);
+
+
 	}
 
 function todaysDate(){
