@@ -105,7 +105,7 @@ ClearAsteroids();
       link = "";
     }
 
-    document.getElementById("dangerText").innerHTML = (`${danger} av listade astroider är potenciellt farliga`);
+    document.getElementById("dangerText").innerHTML = (`Mellan ${neoStartDate} och ${neoEndDate} förväntas ${data.element_count}st astroider passera. <br> ${danger} av listade astroider är potenciellt farliga`);
 
 	// scrolla ner automatiskt till astroiderna
 	window.scrollTo(0,document.body.scrollHeight);
