@@ -17,9 +17,15 @@ sendAPIreq(url + api_key,1); // kör APOS API
 
 function handler(e){
 	// när datumet väljs i datumväljaren skickas läggs det till i filtreringen vid api call
+  var hUrl = "https://api.nasa.gov/planetary/apod?";
+  var datum = e.target.value;
+	sendAPIreq(hUrl + "start_date=" + datum + "&end_date=" + datum + "&api_key=" + api_key, 1);
+}
 
-  let datum = e.target.value;
-	sendAPIreq(aposSelectionURL + "start_date=" + datum + "&end_date=" + datum + "&api_key=" + api_key, 1);
+function clearBox(elementID)
+{
+	arrNamn.length = 0; // nollställ
+    document.getElementById(elementID).innerHTML = ""; // ta bort alla Asteroider
 }
 
 async function sendAPIreq(fetchUrl, apiMetod) {
@@ -32,7 +38,9 @@ async function sendAPIreq(fetchUrl, apiMetod) {
 	});
 
 }
+
 function apiDataUse(data, apiMetod){
+clearBox("astroider");
   doomsdayAstro = [];
 	let danger = 0;
 	if (apiMetod){
@@ -87,6 +95,11 @@ function apiDataUse(data, apiMetod){
       link = "";
     }
     document.getElementById("dangerText").innerHTML = (`Mellan ${neoStartDate} och ${neoEndDate} förväntas ${data.element_count}st astroider passera. <br> ${danger} av listade astroider är potenciellt farliga`);
+
+    document.getElementById("dangerText").innerHTML = (`${danger} av listade astroider är potenciellt farliga`);
+
+	// scrolla ner automatiskt till astroiderna
+	window.scrollTo(0,document.body.scrollHeight);
 
   }
 	}

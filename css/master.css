@@ -1,8 +1,7 @@
 .BG {
   background-image: url('../img/home.jpg');
-  ;
   background-size: cover;
-  height: 500px;
+  height: 480px;
   width: 100%;
   margin: 0px;
   padding: 0px;
@@ -10,10 +9,17 @@
 
 img {
   margin-top: 20px;
-  max-width: 400px;
+  max-width: 300px;
 }
 
 .col-9 {
+  background-color: white;
+  color: black;
+  margin: 0px;
+  padding: 0px;
+}
+
+.col-12 {
   background-color: white;
   color: black;
   margin: 0px;
