@@ -12,6 +12,10 @@
 
   <body>
     <div class="BG">
+      <div class="VäljDatum">
+        <label for="start">Välj Datum:</label>
+        <input type="date" id="dt" min="2000-01-01" max="" onchange="handler(event);"/>
+      </div>
     </div>
     <div class="container">
       <div class="row">
@@ -27,12 +31,19 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <br>
+            <h1>Nasa Near earth</h1>
+              <button type="button" name="astroknapp">Show near Earth objects</button>
+      <h2 id="title"></h2>
+      <h3>Date: <span id="date"></span></h3>
+      <p id="explanation"></p>
+        </div>
   </body>
 
-  <div class="VäljDatum">
-    <label for="start">Välj Datum:</label>
-    <input type="date" id="dt" min="2015-01-01" max="" onchange="handler(event);"/>
-  </div>
+
 
   <script src="js/main.js" charset="utf-8"></script>
 

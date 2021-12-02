@@ -52,7 +52,11 @@ function apiDataUse(data, apiMetod){
 	document.getElementById("explanation").textContent = data.explanation;
 	}
 	else{
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> a226b6cc291a91deea41b0f3463fd9b855c1310d
 		// NeoWs Metod
 		console.log(`Mellan ${neoStartDate} och ${neoEndDate} passerade ${data.element_count}st astroider.`);
 		// astroMin + astroMax består av två olika arrayer. en array för startdatumet (neoStartDate) och en för slutdatum (neoEndDate)
@@ -68,7 +72,11 @@ function apiDataUse(data, apiMetod){
 		// skriver ut alla namn i arrayen med slutdatumet och kollor ifall det fanns någon astroid med potenciell fara.
 		for (let i = 0; i < astroMax.length; i++){
 			 console.log(astroMax[i].name);
+<<<<<<< HEAD
 			 arrNamn.push(astroMax[i].name);
+=======
+
+>>>>>>> a226b6cc291a91deea41b0f3463fd9b855c1310d
 		 if (astroMax.is_potentially_hazardous_asteroid){ danger++;} }
 		}
 		// skriver ut resultatet av hur många som var farliga.
@@ -90,3 +98,10 @@ function todaysDate(){
 	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+todayDate;
 	document.getElementById("dt").max = date;
 }
+<<<<<<< HEAD
+
+
+
+sendAPIreq(neoWs + api_key, 0);
+=======
+>>>>>>> 3d91f0d451ccd03ab43510decbfb0517107e239e
