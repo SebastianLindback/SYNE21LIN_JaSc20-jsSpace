@@ -84,9 +84,9 @@ function apiDataUse(data, apiMetod){
     for (var i = 0; i < arrNamn.length; i++) {
       for (var y = 0; y < doomsdayAstro.length; y++) {
         if (arrNamn[i] == doomsdayAstro[y].name) { classDanger= `class='danger'`; console.log("danger");}
-
+        link = `https://www.google.com/search?q=${arrNamn[i]}`;
       }
-      link = `https://www.google.com/search?q=${arrNamn[i]}`;
+      link = `https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley`;
       document.getElementById("astroider").innerHTML += `<li ${classDanger}><a href='${link}'> ${arrNamn[i]}  <a/></li>`;
       classDanger= "";
       link = "";
