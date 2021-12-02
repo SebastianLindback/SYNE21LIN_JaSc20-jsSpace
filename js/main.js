@@ -33,7 +33,7 @@ function handler(e){
 
 function ClearAsteroids()
 {
-	arrNamn.length = 0; // nollställ 
+	arrNamn.length = 0; // nollställ
 	document.getElementById("dangerText").innerHTML = ""; // ta bort dangertexten
 	document.getElementById("astroider").innerHTML = ""; // ta bort alla Asteroider
 }
@@ -58,7 +58,16 @@ ClearAsteroids();
 	if (data.date == undefined) {data = data[0]}
 	document.getElementById("title").textContent = data.title;
 	document.getElementById("date").textContent = data.date;
-	document.getElementById("pic").src = data.hdurl;
+  // Finns tydligen med youtube videor i APIn. togglar av och på en iframe berorende på media_type
+  if (data.media_type == "image") {
+    document.getElementById("pic").src = data.hdurl;
+    document.getElementById("pic").style.display = "block";
+    document.getElementById("vid").style.display = "none";}
+  else if (data.media_type == "video") {
+    document.getElementById("vid").src = data.url;
+    document.getElementById("pic").style.display = "none";
+    document.getElementById("vid").style.display = "block" }
+
 	document.getElementById("explanation").textContent = data.explanation;
 	}
 	else{
