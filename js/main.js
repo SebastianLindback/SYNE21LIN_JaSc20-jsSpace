@@ -11,6 +11,7 @@ let neoStartDate;
 let neoEndDate;
 let publicTemp;
 let doomsdayAstro = [];
+let danger = 0;
 
 todaysDate(); // definerar dagens datum i datumväljaren.
 neoWs = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${neoStartDate}&end_date=${neoEndDate}&api_key=`;
@@ -27,6 +28,8 @@ function handler(e) {
 
 function ClearAsteroids() {
   arrNamn.length = 0; // nollställ
+  doomsdayAstro = [];
+  danger = 0;
   document.getElementById('dangerText').innerHTML = ''; // ta bort dangertexten
   document.getElementById('astroider').innerHTML = ''; // ta bort alla Asteroider
 }
@@ -44,8 +47,7 @@ async function sendAPIreq(fetchUrl, apiMetod) {
 
 function apiDataUse(data, apiMetod) {
   ClearAsteroids();
-  doomsdayAstro = [];
-  let danger = 0;
+
   if (apiMetod) {
     // APOS Metod
     if (data.date === undefined) { data = data[0]; }
@@ -64,28 +66,18 @@ function apiDataUse(data, apiMetod) {
 
     document.getElementById('explanation').textContent = data.explanation;
   } else {
-    // NeoWs Metod
-    console.log(`Mellan ${neoStartDate} och ${neoEndDate} passerade ${data.element_count}st astroider.`);
+    // NeoWs Metod, retunerar en array med astroider per valt datum
+    console.log(`Mellan ${neoStartDate} och ${neoEndDate} passerar ${data.element_count}st astroider.`);
     // astroMin + astroMax består av två olika arrayer. en array för startdatumet (neoStartDate) och en för slutdatum (neoEndDate)
     const astroMin = data.near_earth_objects[neoStartDate];
-    // skriver ut alla namn i arrayen med startdatumet och kollor ifall det fanns någon astroid med potenciell fara.
-    for (let i = 0; i < astroMin.length; i++) {
-			 console.log(astroMin[i].name);
-			 arrNamn.push(astroMin[i].name);
-		 if (astroMin[i].is_potentially_hazardous_asteroid) { danger++; doomsdayAstro.push(astroMin[i]); }
-    }
-
     const astroMax = data.near_earth_objects[neoEndDate];
-    // skriver ut alla namn i arrayen med slutdatumet och kollor ifall det fanns någon astroid med potenciell fara.
-    for (let i = 0; i < astroMax.length; i++) {
-			 console.log(astroMax[i].name);
-			 arrNamn.push(astroMax[i].name);
-		 if (astroMax[i].is_potentially_hazardous_asteroid) { danger++; doomsdayAstro.push(astroMax[i]); }
-    }
+    // skriver ut alla namn i arrayen och kollor ifall det finns någon astroid med potenciell fara.
+    nameDangerLoop(astroMin);
+    nameDangerLoop(astroMax);
 
-    // skriver ut resultatet av hur många som var farliga.
     let classDanger = '';
     let link = '';
+    // skriver ut resultatet av hur många som var farliga.
     for (let i = 0; i < arrNamn.length; i++) {
       link = `https://www.google.com/search?q=${arrNamn[i]}`;
       for (let y = 0; y < doomsdayAstro.length; y++) {
@@ -104,6 +96,14 @@ function apiDataUse(data, apiMetod) {
 
     // scrolla ner automatiskt till astroiderna
     window.scrollTo(0, document.body.scrollHeight);
+  }
+}
+
+function nameDangerLoop(arr) {
+  for (let i = 0; i < arr.length; i++) {
+     console.log(arr[i].name);
+     arrNamn.push(arr[i].name);
+   if (arr[i].is_potentially_hazardous_asteroid) { danger++; doomsdayAstro.push(arr[i]); }
   }
 }
 
